@@ -269,10 +269,6 @@ local function UpdateBackpackLayout()
 	AdjustInventoryFrames()
 end
 
-local function Clamp(low, high, num)
-	return math.min(high, math.max(low, num))
-end
-
 local function CheckBounds(guiObject, x, y)
 	local pos = guiObject.AbsolutePosition
 	local size = guiObject.AbsoluteSize
@@ -1494,7 +1490,7 @@ ScrollUpInventoryButton.Icon.Position = ScrollUpInventoryButton.Icon.Position - 
 ScrollUpInventoryButton.MouseButton1Click:connect(function()
 	ScrollingFrame.CanvasPosition = Vector2.new(
 		ScrollingFrame.CanvasPosition.X,
-		Clamp(0, ScrollingFrame.CanvasSize.Y.Offset - ScrollingFrame.AbsoluteWindowSize.Y, ScrollingFrame.CanvasPosition.Y - (ICON_BUFFER + ICON_SIZE)))
+		math.clamp(0, ScrollingFrame.CanvasSize.Y.Offset - ScrollingFrame.AbsoluteWindowSize.Y, ScrollingFrame.CanvasPosition.Y - (ICON_BUFFER + ICON_SIZE)))
 end)
 
 ScrollDownInventoryButton = MakeVRRoundButton('ScrollDownButton', 'rbxasset://textures/ui/Backpack/ScrollUpArrow.png')
@@ -1505,7 +1501,7 @@ ScrollDownInventoryButton.Position = UDim2.new(0.5, -ScrollDownInventoryButton.S
 ScrollDownInventoryButton.MouseButton1Click:connect(function()
 	ScrollingFrame.CanvasPosition = Vector2.new(
 		ScrollingFrame.CanvasPosition.X,
-		Clamp(0, ScrollingFrame.CanvasSize.Y.Offset - ScrollingFrame.AbsoluteWindowSize.Y, ScrollingFrame.CanvasPosition.Y + (ICON_BUFFER + ICON_SIZE)))
+		math.clamp(0, ScrollingFrame.CanvasSize.Y.Offset - ScrollingFrame.AbsoluteWindowSize.Y, ScrollingFrame.CanvasPosition.Y + (ICON_BUFFER + ICON_SIZE)))
 end)
 
 ScrollingFrame.Changed:connect(function(prop)
@@ -1895,7 +1891,7 @@ local function OnVREnabled()
 
 			local now = tick()
 			local timeSinceToolChange = now - TimeOfLastToolChange
-			local transparency = math.clamp(timeSinceToolChange / VR_FADE_TIME, 0, 1)
+			local transparency = math.math.clamp(timeSinceToolChange / VR_FADE_TIME, 0, 1)
 
 			if transparency == 1 and BackpackPanel:IsVisible() then
 				BackpackPanel:SetVisible(false)
